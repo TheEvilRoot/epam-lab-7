@@ -13,11 +13,10 @@ object StringUtils {
   def join[A](in: List[A], f: A => String): String =
     foldl[A, String]((x, str) => str.concat(f(x)), "", in)
 
-  def encrypt(in: String, f: Char => Char): String =
+  def encrypt(f: Char => Char)(in: String): String =
      join[Char](map(in.toList, f), String.valueOf)
 
-  def case_encrypt(in: String): String =
-    encrypt(in, {
+  def case_encrypt: String => String = encrypt({
       case x if x.toLower < 'm' => x.toLower
       case x => x.toUpper
     })
